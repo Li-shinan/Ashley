@@ -1,15 +1,23 @@
-泛型：（类型变量）
-1.函数中使用泛型
-2.接口中使用泛型
+# 泛型：（类型变量）
 
-function fn(data:number):number{
-    return data
+### 1.函数中使用泛型.
+
+### 2.接口中使用泛型.
+
+```js
+function fn(data: number): number {
+  return data;
 }
-function fn(data:string):string{
-    return data
+function fn(data: string): string {
+  return data;
 }
-数据不仅仅是变量，类型也是变量
+```
+
+#### 数据不仅仅是变量，类型也是变量
+
+```ts
 function fn<T>(data:T):T{
+
     return data
 }
 fn<Number>(100) //调用
@@ -24,49 +32,68 @@ ley xm:Person<string>={
     name:'xiaoming',
     age:'18'
 }
-多个以逗号隔开，传入的泛型变量可以是接口、字面量、函数、对象都是可以的
-类中使用泛型
+```
 
-class Person<T>{
-    name:T //成员变量、成员属性、非静态变量
-    age:number
-    constructor(name:T,age:number){
-            this.name=name;
-            this.age=age;
-}
-}
-new Person<string>("lili",17)
-泛型约束：
+#### 多个以逗号隔开，传入的泛型变量可以是接口、字面量、函数、对象都是可以的类中使用泛型
 
+```ts
+class Person<T> {
+  name: T; //成员变量、成员属性、非静态变量
+  age: number;
+  constructor(name: T, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+new Person<string>("lili", 17);
+```
+
+#### 泛型约束：
+
+```ts
 function fn<T>(data:T):T{
     console.log(data.length) //标错了，不一定有length,所以对泛型进行一个约束
     return data
 }
-
-接口的形式约束：
+```
+#### 接口的形式约束：
+```ts
 interface Person{
     length:number,
     age:number
 }
 function fn<T extends Person>(data:T):T{
-    console.log(data.length) 
+    console.log(data.length)
     return data
 }
 fn<{age:number,length:number,name:string}>({age:8,length:9,name:'xm'})
-或者
+```
+
+或者 
+```ts
 fn<Person>({age:8,length:9})
+```
 
-对象的形式约束：
-function fn<T extends {age:number,length:number}>(data:T):T{}
+#### 对象的形式约束：
 
-数组形式约束：
-function fn<T extends number[]>(data:T):T{}
+```ts
+function fn<T extends { age: number; length: number }>(data: T): T {}
+```
 
-泛型类型参数约束：
-function fn<T,U extends keyof T>(obj:T,key:U){
-console.log(obj[key])
-    return obj[key]
+#### 数组形式约束：
+
+```ts
+function fn<T extends number[]>(data: T): T {}
+```
+
+#### 泛型类型参数约束：
+
+```ts
+function fn<T, U extends keyof T>(obj: T, key: U) {
+  console.log(obj[key]);
+  return obj[key];
 }
-let a={name:'xm',age:18,address:'北京'}
-fn(a,"name")//正确
-fn(a,"salary") //错误 解释了U extends keyof T
+let a = { name: "xm", age: 18, address: "北京" };
+fn(a, "name"); //正确
+fn(a, "salary"); //错误 解释了U extends keyof T
+```
